@@ -1,0 +1,6 @@
+package: github.com/helphone/importer
+import:
+  - package: gopkg.in/yaml.v2
+    ref:     53feefa2559fb8dfa8d81baad31be332c97d6c77
+  - package: github.com/lib/pq
+    ref:     11fc39a580a008f1f39bb3d11d984fb34ed778d9

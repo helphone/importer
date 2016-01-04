@@ -1,0 +1,10 @@
+FROM golang:1.5.2
+MAINTAINER Gaël Gillard<gael@gaelgillard.com>
+
+RUN go get github.com/tools/godep
+
+COPY ./fake_data /etc/data
+COPY . /go/src/github.com/helphone/importer
+WORKDIR /go/src/github.com/helphone/importer
+
+CMD ["godep", "go", "test", "./..."]

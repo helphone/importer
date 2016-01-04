@@ -1,0 +1,7 @@
+countries:
+  DONTEXIST:
+    translations:
+      en: foo
+  BE:
+    translations:
+      dontexist: BAR

@@ -1,0 +1,9 @@
+phonenumbers:
+  BE:
+  - number: '112'
+    categories:
+    - missing
+  MISSING:
+  - number: '112'
+    categories:
+    - missing

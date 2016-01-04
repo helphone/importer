@@ -1,0 +1,6 @@
+phonenumbers:
+  BE:
+  - number: '112'
+    categories:
+    - police
+    - urgency

@@ -1,0 +1,7 @@
+countries:
+  FR:
+    translations:
+      en: foo
+  BE:
+    translations:
+      fr: BAR

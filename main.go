@@ -15,7 +15,7 @@ func main() {
 	log.Info("Importer stared")
 
 	c := cron.New()
-	c.AddFunc("@every 1m", refresh)
+	c.AddFunc("@every 1h", refresh)
 	c.Start()
 
 	refresh()

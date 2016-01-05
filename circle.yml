@@ -3,7 +3,7 @@ machine:
     - docker
   environment:
     GO15VENDOREXPERIMENT: 1
-    GOPATH: $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$GOPATH
+    GOPATH: $HOME/.go_project
   post:
     - sudo rm -rf /usr/local/go
     - if [ ! -e go1.5.2.linux-amd64.tar.gz ]; then wget https://storage.googleapis.com/golang/go1.5.2.linux-amd64.tar.gz; fi

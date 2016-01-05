@@ -36,12 +36,11 @@ func Refresh() {
 	}
 
 	if err = importCountries(conn, countries); err != nil {
-		log.Info("Error in import of countries; rollback")
-		log.Info("%v", err)
+		log.Infof("Error in import of countries, err: %v", err)
 		return
 	}
 
-	path, _ = filepath.Abs("/etc/data/countries.yml")
+	path, _ = filepath.Abs("/etc/data/phone_numbers_categories.yml")
 	yamlFile, err = ioutil.ReadFile(path)
 	if err != nil {
 		return
@@ -54,8 +53,7 @@ func Refresh() {
 	}
 
 	if err = importPhoneNumbersCategories(conn, categories); err != nil {
-		log.Info("Error in import of categories; rollback")
-		log.Info("%v", err)
+		log.Infof("Error in import of categories, err: %v", err)
 		return
 	}
 
@@ -72,8 +70,7 @@ func Refresh() {
 	}
 
 	if err = importPhoneNumbers(conn, phonenumbers); err != nil {
-		log.Info("Error in import of phonenumbers; rollback")
-		log.Info("%v", err)
+		log.Infof("Error in import of phonenumbers, err: %v", err)
 		return
 	}
 	log.Info("Refresh finished")
@@ -166,7 +163,7 @@ func importPhoneNumbers(conn *transaction.Connection, config model.YAMLPhoneNumb
 			errorInsideAssignement := false
 			for _, categoryCode := range phonenumber.Categories {
 				if conn.IsCategoryExist(categoryCode) == false {
-					err = errors.New("No category")
+					err = errors.New("No category " + categoryCode)
 					errorInsideAssignement = true
 					break
 				}

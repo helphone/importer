@@ -68,8 +68,8 @@ func (c *Connection) IsLanguageExist(code string) bool {
 }
 
 // IsCategoryExist returns a boolean regard of the category exist inside the database
-func (c *Connection) IsCategoryExist(code string) bool {
-	err := c.Tx.QueryRow("SELECT name FROM phone_numbers_categories WHERE name = $1", code).Scan(new(string))
+func (c *Connection) IsCategoryExist(name string) bool {
+	err := c.Tx.QueryRow("SELECT name FROM phone_numbers_categories WHERE name = $1", name).Scan(new(string))
 	return err == nil
 }
 

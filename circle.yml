@@ -3,6 +3,8 @@ machine:
     - docker
   environment:
     GO15VENDOREXPERIMENT: 1
+    GOARCH: amd64
+    GOOS: linux
     GOPATH: $HOME/.go_project
   post:
     - sudo rm -rf /usr/local/go

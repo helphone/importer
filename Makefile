@@ -6,7 +6,9 @@ build:
 	docker build -t helphone/importer .
 	@rm importer
 
+build-for-test: export GO15VENDOREXPERIMENT=1
 build-for-test:
+	go vet $$(go list ./...|grep -v vendor)
 	@docker build -t helphone/importer_test -f Dockerfile.test .
 
 up:
@@ -19,13 +21,14 @@ up:
 
 up-with-build: build up
 
+up-test: export GO15VENDOREXPERIMENT=1
 up-test:
 	@echo "Setup the environnement..."
 	@echo "Mount the database"
 	@docker run -d --name db_importer_test helphone/database > /dev/null 2>&1
 	@sleep 8
 	@echo "Launch tests"
-	@-docker run --rm --name importer_test --env-file ./.env --link db_importer_test:db helphone/importer_test
+	-docker run -it --rm --name importer_test --env-file ./.env --link db_importer_test:db helphone/importer_test
 
 test: build-for-test up-test cleanup
 

@@ -12,18 +12,43 @@
 		},
 		{
 			"ImportPath": "github.com/Sirupsen/logrus",
-			"Comment": "v0.7.3-8-g52919f1",
-			"Rev": "52919f182f9c314f8a38c5afe96506f73d02b4b2"
+			"Comment": "v0.8.7",
+			"Rev": "418b41d23a1bf978c06faea5313ba194650ac088"
+		},
+		{
+			"ImportPath": "github.com/bugsnag/bugsnag-go",
+			"Comment": "v1.0.5-19-g02e9528",
+			"Rev": "02e952891c52fbcb15f113d90633897355783b6e"
+		},
+		{
+			"ImportPath": "github.com/bugsnag/osext",
+			"Rev": "0dd3f918b21bec95ace9dc86c7e70266cfc5c702"
+		},
+		{
+			"ImportPath": "github.com/bugsnag/panicwrap",
+			"Rev": "e2c28503fcd0675329da73bf48b33404db873782"
+		},
+		{
+			"ImportPath": "github.com/getsentry/raven-go",
+			"Rev": "c6b0588b4936def37a1d7ac6bc8004c683dd6a4b"
+		},
+		{
+			"ImportPath": "github.com/kisielk/sqlstruct",
+			"Rev": "648daed35d49dac24a4bff253b190a80da3ab6a5"
 		},
 		{
 			"ImportPath": "github.com/lib/pq",
-			"Comment": "go1.0-cutoff-51-ga8d8d01",
-			"Rev": "a8d8d01c4f91602f876bf5aa210274e8203a6b45"
+			"Comment": "go1.0-cutoff-63-g11fc39a",
+			"Rev": "11fc39a580a008f1f39bb3d11d984fb34ed778d9"
 		},
 		{
 			"ImportPath": "github.com/robfig/cron",
-			"Comment": "v1-5-ge428092",
-			"Rev": "e4280929dd5d1064616a07bc7912264525e845e5"
+			"Comment": "v1-7-g32d9c27",
+			"Rev": "32d9c273155a0506d27cf73dd1246e86a470997e"
+		},
+		{
+			"ImportPath": "github.com/tobi/airbrake-go",
+			"Rev": "a3cdd910a3ffef88a20fbecc10363a520ad61a0a"
 		},
 		{
 			"ImportPath": "gopkg.in/yaml.v2",

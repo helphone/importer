@@ -24,7 +24,7 @@ test:
   override:
     - docker run -d --name db_importer_test helphone/database:latest
     - sleep 8
-    - cd $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME && docker run -it --rm --name importer_test --env GO15VENDOREXPERIMENT=1 --env DB_USERNAME=postgres --env DB_PASSWORD=postgres --env GIT_ACCESS=d8b37dc9afd9cf1b8ab1803657f3331ce413fdcc --link db_importer_test:db helphone/importer_test
+    - cd $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME && docker run -it --rm --name importer_test --env GO15VENDOREXPERIMENT=1 --env DB_USERNAME=postgres --env DB_PASSWORD=postgres --env GIT_ACCESS=$GIT_ACCESS --link db_importer_test:db helphone/importer_test
 
 deployment:
   hub:

@@ -3,6 +3,7 @@ all: build
 build:
 	GOOS=linux GO15VENDOREXPERIMENT=1 go build -o importer main.go
 	docker build -t helphone/importer .
+	@rm ./importer
 
 build-for-test:
 	@docker build -t helphone/importer_test -f Dockerfile.test .
@@ -28,4 +29,5 @@ mount-test:
 test: build-for-test mount-test cleanup
 
 cleanup:
+	@echo "Cleanup in progress..."
 	@-docker rm -f db_importer db_importer_test > /dev/null 2>&1

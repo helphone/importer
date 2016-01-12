@@ -1,12 +1,14 @@
 all: build
 
-build:
-	GOOS=linux GO15VENDOREXPERIMENT=1 go build -o importer main.go
-	docker build -t helphone/importer .
-	@rm ./importer
+create-builder:
+	docker build -t helphone/importer-builder -f scripts/Dockerfile.build .
 
-build-for-test:
-	@docker build -t helphone/importer_test -f Dockerfile.test .
+build:
+	docker run --name builder -v $$(pwd):/usr/lib/go/src/github.com/helphone/importer helphone/importer-builder
+	@docker cp builder:/usr/lib/go/src/github.com/helphone/importer/importer ./importer
+	@docker rm builder
+	docker build -t helphone/importer -f scripts/Dockerfile .
+	@rm importer
 
 mount:
 	@echo "Mount the database"
@@ -24,9 +26,9 @@ mount-test:
 	@docker run -d --name db_importer_test helphone/database > /dev/null 2>&1
 	@sleep 8
 	@echo "Launch tests"
-	-docker run -it --rm --name importer_test --env-file ./.env --link db_importer_test:db helphone/importer_test
+	-docker run -it --rm --env-file ./.env --link db_importer_test:db --name importer_test -v $$(pwd):/usr/lib/go/src/github.com/helphone/importer helphone/importer-builder /bin/sh -c "./scripts/test.sh"
 
-test: build-for-test mount-test cleanup
+test: mount-test cleanup
 
 cleanup:
 	@echo "Cleanup in progress..."

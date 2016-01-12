@@ -17,7 +17,7 @@ func TestBadImportCountries(t *testing.T) {
 	}
 
 	var countries model.YAMLCountries
-	path, _ := filepath.Abs("/etc/data/bad_countries.yml")
+	path, _ := filepath.Abs("../fake_data/bad_countries.yml")
 	yamlFile, err := ioutil.ReadFile(path)
 	if err != nil {
 		t.Errorf("Error during the reading of the YAML, err: %v", err)
@@ -43,7 +43,7 @@ func TestGoodImportCountries(t *testing.T) {
 	}
 
 	var countries model.YAMLCountries
-	path, _ := filepath.Abs("/etc/data/good_countries.yml")
+	path, _ := filepath.Abs("../fake_data/good_countries.yml")
 	yamlFile, err := ioutil.ReadFile(path)
 	if err != nil {
 		t.Errorf("Error during the reading of the YAML, err: %v", err)
@@ -69,7 +69,7 @@ func TestBadImportPhoneNumbersCategories(t *testing.T) {
 	}
 
 	var categories model.YAMLPhoneNumbersCategories
-	path, _ := filepath.Abs("/etc/data/bad_phone_numbers_categories.yml")
+	path, _ := filepath.Abs("../fake_data/bad_phone_numbers_categories.yml")
 	yamlFile, err := ioutil.ReadFile(path)
 	if err != nil {
 		t.Errorf("Error during the reading of the YAML, err: %v", err)
@@ -95,7 +95,7 @@ func TestGoodImportPhoneNumbersCategories(t *testing.T) {
 	}
 
 	var categories model.YAMLPhoneNumbersCategories
-	path, _ := filepath.Abs("/etc/data/good_phone_numbers_categories.yml")
+	path, _ := filepath.Abs("../fake_data/good_phone_numbers_categories.yml")
 	yamlFile, err := ioutil.ReadFile(path)
 	if err != nil {
 		t.Errorf("Error during the reading of the YAML, err: %v", err)
@@ -121,7 +121,7 @@ func TestBadImportPhoneNumbers(t *testing.T) {
 	}
 
 	var phonenumbers model.YAMLPhoneNumbers
-	path, _ := filepath.Abs("/etc/data/bad_phone_numbers.yml")
+	path, _ := filepath.Abs("../fake_data/bad_phone_numbers.yml")
 	yamlFile, err := ioutil.ReadFile(path)
 	if err != nil {
 		t.Errorf("Error during the reading of the YAML, err: %v", err)
@@ -147,7 +147,7 @@ func TestGoodImportPhoneNumbers(t *testing.T) {
 	}
 
 	var phonenumbers model.YAMLPhoneNumbers
-	path, _ := filepath.Abs("/etc/data/good_phone_numbers.yml")
+	path, _ := filepath.Abs("../fake_data/good_phone_numbers.yml")
 	yamlFile, err := ioutil.ReadFile(path)
 	if err != nil {
 		t.Errorf("Error during the reading of the YAML, err: %v", err)

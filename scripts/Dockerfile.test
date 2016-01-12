@@ -1,6 +1,9 @@
 FROM golang:1.5.2
 MAINTAINER Gaël Gillard<gael@gaelgillard.com>
 
+ENV CGO_ENABLED=1
+ENV GO15VENDOREXPERIMENT=1
+
 COPY ./fake_data /etc/data
 COPY . /go/src/github.com/helphone/importer
 WORKDIR /go/src/github.com/helphone/importer

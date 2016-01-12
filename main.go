@@ -7,7 +7,7 @@ import (
 )
 
 func refresh() {
-	job.PullRepo()
+	job.UpdateSource()
 	job.Refresh()
 }
 

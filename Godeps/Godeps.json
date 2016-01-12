@@ -106,6 +106,10 @@
 			"Rev": "96c060f6a6b7e0d6f75fddd10efeaca3e5d1bcb0"
 		},
 		{
+			"ImportPath": "gopkg.in/libgit2/git2go.v23",
+			"Rev": "6d3a3499f1639a6272e334f9f74b1e0cf6b0bb49"
+		},
+		{
 			"ImportPath": "gopkg.in/yaml.v2",
 			"Rev": "53feefa2559fb8dfa8d81baad31be332c97d6c77"
 		}

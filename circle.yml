@@ -18,20 +18,20 @@ dependencies:
   override:
     - mkdir -p $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME
     - ln -fs $HOME/$CIRCLE_PROJECT_REPONAME $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
-    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; else docker pull golang:1.5.2 && mkdir -p ~/docker && docker save golang:1.5.2 > ~/docker/image.tar; fi
-    - docker pull helphone/database:latest
-    - docker build -t helphone/importer_test -f Dockerfile.test .
+    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; else docker pull helphone/importer-builder:latest && docker pull docker pull helphone/database:latest && mkdir -p ~/docker && docker save golang:1.5.2 > ~/docker/image.tar; fi
 
 test:
   override:
     - docker run -d --name db_importer_test helphone/database:latest
     - sleep 8
-    - cd $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME && docker run -it --rm --name importer_test --env GO15VENDOREXPERIMENT=1 --env DB_USERNAME=postgres --env DB_PASSWORD=postgres --env GIT_ACCESS=$GIT_ACCESS --link db_importer_test:db helphone/importer_test
+    - cd $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+    - docker run -it --rm --name importer_test --env GO15VENDOREXPERIMENT=1 --env DB_USERNAME=postgres --env DB_PASSWORD=postgres --link db_importer_test:db helphone/importer_test /bin/sh -c "./scripts/test.sh"
 
 deployment:
   hub:
     branch: master
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - cd $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME && CGO_ENABLED=0 go build -a -installsuffix cgo -ldflags '-s' . && docker build -t $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - cd $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+      - make build
       - docker push $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME

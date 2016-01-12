@@ -24,7 +24,7 @@ test:
   override:
     - docker run -d --name db_importer_test helphone/database:latest
     - sleep 8
-    - docker run -it --rm --name importer_test --env GO15VENDOREXPERIMENT=1 --env DB_USERNAME=postgres --env DB_PASSWORD=postgres --link db_importer_test:db -v $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:/usr/lib/go/src/github.com/helphone/importer helphone/importer-builder /bin/sh -c "./scripts/test.sh"
+    - docker run -it --rm --name importer_test --env DB_USERNAME=postgres --env DB_PASSWORD=postgres --link db_importer_test:db -v $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:/usr/lib/go/src/github.com/helphone/importer helphone/importer-builder /bin/sh -c "./scripts/test.sh"
 
 deployment:
   hub:
@@ -32,5 +32,6 @@ deployment:
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - cd $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
-      - make build
+      - docker run --name builder -v $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:/usr/lib/go/src/github.com/helphone/importer helphone/importer-builder
+      - docker build -t helphone/importer -f scripts/Dockerfile .
       - docker push $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME

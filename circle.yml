@@ -18,14 +18,13 @@ dependencies:
   override:
     - mkdir -p $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME
     - ln -fs $HOME/$CIRCLE_PROJECT_REPONAME $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
-    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; else docker pull helphone/importer-builder:latest && docker pull docker pull helphone/database:latest && mkdir -p ~/docker && docker save golang:1.5.2 > ~/docker/image.tar; fi
+    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; else docker pull helphone/importer-builder:latest && docker pull helphone/database:latest && mkdir -p ~/docker && docker save helphone/importer-builder:latest helphone/database:latest > ~/docker/image.tar; fi
 
 test:
   override:
     - docker run -d --name db_importer_test helphone/database:latest
     - sleep 8
-    - cd $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
-    - docker run -it --rm --name importer_test --env GO15VENDOREXPERIMENT=1 --env DB_USERNAME=postgres --env DB_PASSWORD=postgres --link db_importer_test:db helphone/importer_test /bin/sh -c "./scripts/test.sh"
+    - docker run -it --rm --name importer_test --env GO15VENDOREXPERIMENT=1 --env DB_USERNAME=postgres --env DB_PASSWORD=postgres --link db_importer_test:db -v $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:/usr/lib/go/src/github.com/helphone/importer helphone/importer-builder /bin/sh -c "./scripts/test.sh"
 
 deployment:
   hub:

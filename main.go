@@ -12,7 +12,7 @@ func refresh() {
 		log.Info("Database failed")
 		return
 	}
-	needRefresh, err := job.UpdateSource()
+	needRefresh := job.UpdateSource()
 	if (needRefresh == true || firstPass == true) && err == nil {
 		log.Infof("needRefresh is %v and firstPass is %v", needRefresh, firstPass)
 		job.Refresh()

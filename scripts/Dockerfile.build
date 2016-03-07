@@ -1,13 +1,8 @@
 FROM alpine:3.3
 MAINTAINER Gaël Gillard<gael@gaelgillard.com>
 
-RUN echo http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
-		apk add --update go libgit2-dev libgit2-libs gcc libc-dev && \
+RUN apk add --update go git && \
 		rm -rf /var/cache/apk/*
-
-
-ENV CGO_ENABLED=1
-ENV GO15VENDOREXPERIMENT=1
 
 VOLUME ["/usr/lib/go/src/github.com/helphone/importer"]
 WORKDIR /usr/lib/go/src/github.com/helphone/importer

@@ -8,12 +8,12 @@ machine:
     GOPATH: $HOME/.go_project
   post:
     - sudo rm -rf /usr/local/go
-    - if [ ! -e go1.5.2.linux-amd64.tar.gz ]; then wget https://storage.googleapis.com/golang/go1.5.2.linux-amd64.tar.gz; fi
-    - sudo tar -C /usr/local -xzf go1.5.2.linux-amd64.tar.gz
+    - if [ ! -e go1.6.linux-amd64.tar.gz ]; then wget https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz; fi
+    - sudo tar -C /usr/local -xzf go1.6.linux-amd64.tar.gz
 
 dependencies:
   cache_directories:
-    - ~/go1.5.2.linux-amd64.tar.gz
+    - ~/go1.6.linux-amd64.tar.gz
     - ~/docker
   override:
     - mkdir -p $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME

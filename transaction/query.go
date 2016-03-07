@@ -1,8 +1,6 @@
 package transaction
 
-import (
-	"errors"
-)
+import "errors"
 
 // IsDatabaseEmpty tell you if the database is at his first pass without data inside
 func (c *Connection) IsDatabaseEmpty() (bool, error) {

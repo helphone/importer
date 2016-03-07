@@ -23,8 +23,8 @@ func TestIsDatabaseEmpty(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error in SQL: err %v", err)
 	}
-	if isIt != false {
-		t.Errorf("The database should be empty: err %v", err)
+	if isIt != true {
+		t.Error("The database should be empty")
 	}
 
 	generateResult(t, mock, err)

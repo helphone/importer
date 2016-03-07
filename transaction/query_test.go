@@ -11,6 +11,25 @@ var (
 	oneRowCreatedMockResult = sqlmock.NewResult(1, 1)
 )
 
+func TestIsDatabaseEmpty(t *testing.T) {
+	c, mock, err := generateConnection()
+	if err != nil {
+		t.Errorf("Error in the generation of the mock: err %v", err)
+	}
+
+	rows := sqlmock.NewRows([]string{"count"}).AddRow(0)
+	mock.ExpectQuery("SELECT (.+) from countries_translations").WillReturnRows(rows)
+	isIt, err := c.IsDatabaseEmpty()
+	if err != nil {
+		t.Errorf("Error in SQL: err %v", err)
+	}
+	if isIt != false {
+		t.Errorf("The database should be empty: err %v", err)
+	}
+
+	generateResult(t, mock, err)
+}
+
 func TestRemoveCountriesTranslations(t *testing.T) {
 	c, mock, err := generateConnection()
 	if err != nil {

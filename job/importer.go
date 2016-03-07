@@ -11,6 +11,19 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// IsDatabaseEmpty will return if the database has no
+// initial data inside that should be provided by the importer
+func IsDatabaseEmpty() (bool, error) {
+	conn, err := transaction.CreateConnection()
+	if err != nil {
+		log.Info("Error in database connection")
+		return false, err
+	}
+	defer conn.Finish(nil)
+
+	return conn.IsDatabaseEmpty()
+}
+
 // Refresh will launch the process of updating the database
 func Refresh() {
 	log.Info("Refresh started")

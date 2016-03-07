@@ -4,6 +4,13 @@ import (
 	"errors"
 )
 
+// IsDatabaseEmpty tell you if the database is at his first pass without data inside
+func (c *Connection) IsDatabaseEmpty() (bool, error) {
+	var count int
+	err := c.Tx.QueryRow("SELECT COUNT(DISTINCT country_code) from countries_translations").Scan(&count)
+	return (count == 0), err
+}
+
 // RemoveCountriesTranslations does a truncate on the database
 func (c *Connection) RemoveCountriesTranslations() error {
 	_, err := c.Tx.Exec("TRUNCATE TABLE countries_translations")

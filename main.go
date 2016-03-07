@@ -7,15 +7,23 @@ import (
 )
 
 func refresh() {
-	job.UpdateSource()
-	job.Refresh()
+	firstPass, err := job.IsDatabaseEmpty()
+	if err != nil {
+		log.Info("Database failed")
+		return
+	}
+	needRefresh, err := job.UpdateSource()
+	if (needRefresh == true || firstPass == true) && err == nil {
+		log.Infof("needRefresh is %v and firstPass is %v", needRefresh, firstPass)
+		job.Refresh()
+	}
 }
 
 func main() {
 	log.Info("Importer stared")
 
 	c := cron.New()
-	c.AddFunc("@every 1h", refresh)
+	c.AddFunc("@every 1m", refresh)
 	c.Start()
 
 	refresh()

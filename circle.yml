@@ -1,37 +1,23 @@
 machine:
   services:
     - docker
-  environment:
-    GO15VENDOREXPERIMENT: 1
-    GOARCH: amd64
-    GOOS: linux
-    GOPATH: $HOME/.go_project
-  post:
-    - sudo rm -rf /usr/local/go
-    - if [ ! -e go1.6.linux-amd64.tar.gz ]; then wget https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz; fi
-    - sudo tar -C /usr/local -xzf go1.6.linux-amd64.tar.gz
 
 dependencies:
-  cache_directories:
-    - ~/go1.6.linux-amd64.tar.gz
-    - ~/docker
   override:
-    - mkdir -p $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME
-    - ln -fs $HOME/$CIRCLE_PROJECT_REPONAME $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
-    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; else docker pull helphone/importer-builder:latest && docker pull helphone/database:latest && mkdir -p ~/docker && docker save helphone/importer-builder:latest helphone/database:latest > ~/docker/image.tar; fi
+    - docker pull helphone/importer-builder:latest
+    - docker pull helphone/database:latest
 
 test:
   override:
     - docker run -d --name db_importer_test helphone/database:latest
-    - sleep 8
-    - docker run -it --rm --name importer_test --env DB_USERNAME=postgres --env DB_PASSWORD=postgres --link db_importer_test:db -v $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:/usr/lib/go/src/github.com/helphone/importer helphone/importer-builder /bin/sh -c "./scripts/test.sh"
+    - sleep 10
+    - docker run -it --rm --name importer_test --env DB_USERNAME=postgres --env DB_PASSWORD=postgres --link db_importer_test:db -v $(pwd):/go/src/github.com/helphone/importer helphone/importer-builder /bin/sh -c "./scripts/test.sh"
 
 deployment:
   hub:
     branch: master
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - cd $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
-      - docker run --name builder -v $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:/usr/lib/go/src/github.com/helphone/importer helphone/importer-builder
+      - docker run --name builder -v $(pwd):/go/src/github.com/helphone/importer helphone/importer-builder
       - docker build -t helphone/importer -f scripts/Dockerfile .
       - docker push $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME

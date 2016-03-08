@@ -1,10 +1,10 @@
-FROM alpine:3.3
+FROM golang:1.6-alpine
 MAINTAINER Gaël Gillard<gael@gaelgillard.com>
 
-RUN apk add --update go git && \
+RUN apk add --update git && \
 		rm -rf /var/cache/apk/*
 
-VOLUME ["/usr/lib/go/src/github.com/helphone/importer"]
-WORKDIR /usr/lib/go/src/github.com/helphone/importer
+VOLUME ["/go/src/github.com/helphone/importer"]
+WORKDIR /go/src/github.com/helphone/importer
 
 CMD ["go", "build", "-o", "importer", "main.go"]
